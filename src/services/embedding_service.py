@@ -1,11 +1,20 @@
-from fastembed.embedding import FlagEmbedding
+import re
+import string
+from sentence_transformers import SentenceTransformer
 
-# Load embedding model once
-embedder = FlagEmbedding("BAAI/bge-small-en")
+# Load once at startup
+embed_model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
-def embed_text(text):
-    """
-    Returns embedding vector for a given text
-    """
-    embedding = embedder.embed([text])
-    return list(embedding)[0]
+
+def clean_text(text):
+    if not isinstance(text, str):
+        return ""
+    text = text.lower()
+    text = re.sub(r"\d+", " ", text)
+    text = text.translate(str.maketrans("", "", string.punctuation))
+    text = " ".join(text.split())
+    return text.strip()
+
+
+def embed_text(text: str):
+    return embed_model.encode(text, normalize_embeddings=True)
