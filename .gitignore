@@ -3,3 +3,22 @@ __pycache__/
 *.pyc
 fastembed_cache/
 .env
+# OS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# Jupyter
+*.ipynb
+.ipynb_checkpoints/
+
+# IDE
+.idea/
+.vscode/
+
+# Data / test files
+data_engineer_cvs/
+
